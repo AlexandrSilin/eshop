@@ -4,10 +4,11 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StringToRoleDtoConverter implements Converter<String, RoleDto> {
+public class StringToCategoryDtoConverter implements Converter<String, CategoryDto> {
+
     @Override
-    public RoleDto convert(String s) {
+    public CategoryDto convert(String s) {
         String[] arr = s.split(";");
-        return new RoleDto(Long.parseLong(arr[0]), arr[1]);
+        return new CategoryDto(Long.parseLong(arr[0]), arr[1]);
     }
 }

@@ -1,33 +1,33 @@
 package ru.eshop.admin.presist;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "categories")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @NotBlank
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @OneToMany(targetEntity = Product.class, mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products;
 
-    public Role() {
+    public Category() {
+
     }
 
-    public Role(Long id, String name) {
+    public Category(Long id, String name, List<Product> products) {
         this.id = id;
         this.name = name;
+        this.products = products;
     }
 
     public Long getId() {
@@ -46,20 +46,21 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id.equals(role.id) && name.equals(role.name);
+        if (o.hashCode() != this.hashCode()) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id) && Objects.equals(name, category.name);
     }
 
     @Override

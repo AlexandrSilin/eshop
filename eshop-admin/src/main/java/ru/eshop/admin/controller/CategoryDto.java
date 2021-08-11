@@ -3,18 +3,18 @@ package ru.eshop.admin.controller;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-public class RoleDto {
+public class CategoryDto {
 
     private Long id;
 
     @NotBlank
     private String name;
 
-    public RoleDto() {
+    public CategoryDto() {
 
     }
 
-    public RoleDto(Long id, String name) {
+    public CategoryDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -40,8 +40,8 @@ public class RoleDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (o.hashCode() != this.hashCode()) return false;
-        RoleDto roleDto = (RoleDto) o;
-        return Objects.equals(id, roleDto.id) && Objects.equals(name, roleDto.name);
+        CategoryDto that = (CategoryDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override

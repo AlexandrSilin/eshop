@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/page_header :: page_header()"/>
+
+<body>
+
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/users/new}">Add User</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="usernameFilter">Username filter</label>
+                    <input class="form-control" id="usernameFilter" name="usernameFilter" placeholder="Username filter"
+                           th:value="${param.usernameFilter}" type="text">
+                </div>
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="minAge">Minimal age</label>
+                    <input class="form-control" id="minAge" name="minAge" placeholder="Minimal age"
+                           th:value="${param.minAge}" type="number">
+                </div>
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="maxAge">Maximal age</label>
+                    <input class="form-control" id="maxAge" name="maxAge" placeholder="Maximal age"
+                           th:value="${param.maxAge}" type="number">
+                </div>
+
+                <button class="btn btn-primary mb-2" type="submit">Apply</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Id', 'id')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Username', 'username')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Age', 'age')"></th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users.content}" th:if="${users.hasContent()}">
+                    <th scope="row" th:text="${user.id}">1</th>
+                    <td th:text="${user.username}">Alex</td>
+                    <td th:text="${user.age}">22</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/users/{id}(id = ${user.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/users/{id}(id = ${user.id})}" th:method="delete">
+                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:unless="${users.hasContent()}">
+                    <td colspan="4">No data</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${users.hasContent() && users.isFirst() != users.isLast()}">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${users.isFirst()} ? 'disabled'">
+                        <a class="page-link" tabindex="-1" th:href="@{/users(page=${users.getNumber()}, size=${users.size}, minAge=${param.minAge},
+                       maxAge=${param.maxAge}, sortBy=${param.sortBy})}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${num == users.number + 1} ? 'active'"
+                        th:each="num : ${#numbers.sequence(1, users.totalPages)}">
+                        <a class="page-link" th:href="@{/users(page=${num}, size=${users.size}, minAge=${param.minAge},
+                       maxAge=${param.maxAge}, sortBy=${param.sortBy})}"
+                           th:text="${num}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${users.isLast()} ? 'disabled'">
+                        <a class="page-link" th:href="@{/users(page=${users.getNumber() + 1} + 1, size=${users.size}, minAge=${param.minAge},
+                       maxAge=${param.maxAge}, sortBy=${param.sortBy})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!--        <div class="col-12" th:if="${users.hasContent()}">-->
+    <!--            <nav aria-label="...">-->
+    <!--                <ul class="pagination">-->
+    <!--                    <li class="page-item disabled">-->
+    <!--                        <a class="page-link" href="#" tabindex="-1">Previous</a>-->
+    <!--                    </li>-->
+
+    <!--                    <li th:each="num : ${#numbers.sequence(1, users.totalPages)}"-->
+    <!--                        th:classappend="${num == users.number + 1} ? 'active'"-->
+    <!--                        class="page-item">-->
+    <!--                        <a class="page-link"-->
+    <!--                           th:text="${num}"-->
+    <!--                           th:href="@{/users(page=${num}, size=${users.size}, usernameFilter=${param.usernameFilter},-->
+    <!--                           minAge=${param.minAge}, maxAge=${param.maxAge}, sortField=${param.sortField})}">1</a>-->
+    <!--                    </li>-->
+
+    <!--                    <li class="page-item">-->
+    <!--                        <a class="page-link" href="#">Next</a>-->
+    <!--                    </li>-->
+    <!--                </ul>-->
+    <!--            </nav>-->
+    <!--        </div>-->
+</div>
+</div>
+
+<th:block th:replace="fragments/default_scripts :: default_scripts()"/>
+</body>
+</html>

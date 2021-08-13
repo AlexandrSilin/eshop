@@ -2,6 +2,7 @@ package ru.eshop.admin.controller;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+import ru.eshop.admin.dto.CategoryDto;
 
 @Component
 public class StringToCategoryDtoConverter implements Converter<String, CategoryDto> {

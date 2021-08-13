@@ -1,6 +1,8 @@
-package ru.eshop.admin.presist;
+package ru.eshop.admin.persist;
 
 import org.springframework.data.jpa.domain.Specification;
+import ru.eshop.admin.persist.model.Category;
+import ru.eshop.admin.persist.model.Product;
 
 import java.math.BigDecimal;
 

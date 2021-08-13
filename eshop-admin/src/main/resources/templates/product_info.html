@@ -35,7 +35,8 @@
                     <label>Categories</label>
                     <ul class="checkbox-list">
                         <div th:each="category : ${categories}">
-                            <input id="categories" multiple required th:field="*{category}" th:selected="${product.category == null}"
+                            <input id="categories" multiple required th:field="*{category}"
+                                   th:selected="${product.category == null}"
                                    th:text="${category.name}"
                                    th:value="${category.id} + ';' + ${category.name}"
                                    type="radio"/>

@@ -9,7 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.eshop.admin.presist.RoleRepository;
+import ru.eshop.admin.dto.RoleDto;
+import ru.eshop.admin.dto.UserDto;
+import ru.eshop.admin.persist.RoleRepository;
 import ru.eshop.admin.service.UserService;
 
 import javax.validation.Valid;

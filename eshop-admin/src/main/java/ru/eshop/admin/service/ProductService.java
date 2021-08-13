@@ -1,8 +1,8 @@
 package ru.eshop.admin.service;
 
 import org.springframework.data.domain.Page;
-import ru.eshop.admin.controller.ProductDto;
 import ru.eshop.admin.controller.ProductListParams;
+import ru.eshop.admin.dto.ProductDto;
 
 import java.util.List;
 import java.util.Optional;

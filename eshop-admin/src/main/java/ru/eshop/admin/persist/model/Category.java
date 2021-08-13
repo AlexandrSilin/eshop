@@ -1,4 +1,4 @@
-package ru.eshop.admin.presist;
+package ru.eshop.admin.persist.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

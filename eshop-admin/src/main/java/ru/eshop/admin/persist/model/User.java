@@ -1,39 +1,38 @@
-package ru.eshop.admin.controller;
+package ru.eshop.admin.persist.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+import javax.persistence.*;
 import java.util.Set;
 
-public class UserDto {
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @Column(nullable = false)
     private String username;
 
-    @Positive
+    @Column(nullable = false)
     private Integer age;
 
-    @NotBlank
+    @Column
     private String password;
 
-    @NotBlank
-    private String repeatPassword;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-    private Set<RoleDto> roles;
-
-    public UserDto() {
-
+    public User() {
     }
 
-    public UserDto(Long id, String username, Integer age) {
+    public User(Long id, String username, String password, Integer age, Set<Role> roles) {
         this.id = id;
         this.username = username;
-        this.age = age;
-    }
-
-    public UserDto(Long id, String username, Integer age, Set<RoleDto> roles) {
-        this.id = id;
-        this.username = username;
+        this.password = password;
         this.age = age;
         this.roles = roles;
     }
@@ -70,19 +69,11 @@ public class UserDto {
         this.password = password;
     }
 
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
-
-    public void setRepeatPassword(String repeatPassword) {
-        this.repeatPassword = repeatPassword;
-    }
-
-    public Set<RoleDto> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleDto> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

@@ -1,4 +1,4 @@
-package ru.eshop.admin.controller;
+package ru.eshop.admin.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;

@@ -27,7 +27,8 @@
                 </div>
                 <div class="form-group">
                     <label>Repeat password</label>
-                    <input class="form-control" id="repeatPassword" placeholder="Repeat password" th:field="*{repeatPassword}"
+                    <input class="form-control" id="repeatPassword" placeholder="Repeat password"
+                           th:field="*{repeatPassword}"
                            type="password">
                     <p class="text-danger" th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></p>
                 </div>

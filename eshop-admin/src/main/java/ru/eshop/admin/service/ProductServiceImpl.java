@@ -6,10 +6,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.eshop.admin.controller.CategoryDto;
-import ru.eshop.admin.controller.ProductDto;
 import ru.eshop.admin.controller.ProductListParams;
-import ru.eshop.admin.presist.*;
+import ru.eshop.admin.dto.CategoryDto;
+import ru.eshop.admin.dto.ProductDto;
+import ru.eshop.admin.persist.CategoryRepository;
+import ru.eshop.admin.persist.ProductRepository;
+import ru.eshop.admin.persist.ProductSpecifications;
+import ru.eshop.admin.persist.model.Category;
+import ru.eshop.admin.persist.model.Product;
 
 import java.util.List;
 import java.util.Optional;

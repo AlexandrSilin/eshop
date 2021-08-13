@@ -11,7 +11,10 @@
     <name>eshop-admin</name>
     <description>eshop-admin</description>
     <dependencies>
-
+        <dependency>
+            <groupId>ru.eshop</groupId>
+            <artifactId>shop-database</artifactId>
+        </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>

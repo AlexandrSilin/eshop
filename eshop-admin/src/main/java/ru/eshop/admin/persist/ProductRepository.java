@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
-
     @Query("select p from Product p left join fetch p.category where (p.price >= :minPrice or :minPrice is null) and " +
             "(p.price <= :maxPrice or :maxPrice is null) and " +
             "(p.category = :category or :category is null)")

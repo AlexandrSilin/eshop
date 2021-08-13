@@ -30,6 +30,11 @@ public class Category {
         this.products = products;
     }
 
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

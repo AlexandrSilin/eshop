@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public String deleteProduct(@PathVariable("id") Long id) {
         logger.info("Deleting product with id {}", id);
         productService.deleteById(id);
         return "redirect:/products";

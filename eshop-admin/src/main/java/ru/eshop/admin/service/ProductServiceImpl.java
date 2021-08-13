@@ -88,4 +88,11 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public List<ProductDto> findByCategory(Long categoryId) {
+        return productRepository.findAll().stream().filter(product -> product.getCategory().getId().equals(categoryId))
+                .map(product -> new ProductDto(product.getId(), product.getTitle(), product.getPrice(),
+                        product.getDescription(), getCategory(product))).collect(Collectors.toList());
+    }
 }

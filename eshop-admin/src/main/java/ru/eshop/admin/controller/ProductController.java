@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.eshop.admin.dto.CategoryDto;
 import ru.eshop.admin.dto.ProductDto;
 import ru.eshop.admin.exceptions.NotFoundException;
-import ru.eshop.admin.persist.CategoryRepository;
 import ru.eshop.admin.service.ProductService;
+import ru.eshop.database.persist.CategoryRepository;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;

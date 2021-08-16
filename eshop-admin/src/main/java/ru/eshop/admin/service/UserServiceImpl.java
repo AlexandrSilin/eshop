@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import ru.eshop.admin.controller.UserListParams;
 import ru.eshop.admin.dto.RoleDto;
 import ru.eshop.admin.dto.UserDto;
-import ru.eshop.admin.persist.RoleRepository;
-import ru.eshop.admin.persist.UserRepository;
-import ru.eshop.admin.persist.UserSpecifications;
-import ru.eshop.admin.persist.model.User;
+import ru.eshop.database.persist.RoleRepository;
+import ru.eshop.database.persist.UserRepository;
+import ru.eshop.database.persist.UserSpecifications;
+import ru.eshop.database.persist.model.User;
 
 import java.util.List;
 import java.util.Optional;

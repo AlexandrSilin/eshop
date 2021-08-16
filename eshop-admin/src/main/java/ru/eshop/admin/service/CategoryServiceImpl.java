@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import ru.eshop.admin.controller.CategoryListParams;
 import ru.eshop.admin.dto.CategoryDto;
 import ru.eshop.admin.dto.ProductDto;
-import ru.eshop.admin.persist.CategoryRepository;
-import ru.eshop.admin.persist.CategorySpecification;
-import ru.eshop.admin.persist.model.Category;
+import ru.eshop.database.persist.CategoryRepository;
+import ru.eshop.database.persist.CategorySpecification;
+import ru.eshop.database.persist.model.Category;
 
 import java.util.List;
 import java.util.Optional;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.eshop.admin.dto.RoleDto;
 import ru.eshop.admin.dto.UserDto;
-import ru.eshop.admin.persist.RoleRepository;
 import ru.eshop.admin.service.UserService;
+import ru.eshop.database.persist.RoleRepository;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;

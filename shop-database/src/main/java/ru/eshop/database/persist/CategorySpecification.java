@@ -1,7 +1,7 @@
-package ru.eshop.admin.persist;
+package ru.eshop.database.persist;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.eshop.admin.persist.model.Category;
+import ru.eshop.database.persist.model.Category;
 
 public final class CategorySpecification {
     public static Specification<Category> categoryPrefix(String prefix) {

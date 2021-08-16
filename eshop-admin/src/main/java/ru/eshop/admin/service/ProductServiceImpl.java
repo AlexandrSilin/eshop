@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import ru.eshop.admin.controller.ProductListParams;
 import ru.eshop.admin.dto.CategoryDto;
 import ru.eshop.admin.dto.ProductDto;
-import ru.eshop.admin.persist.CategoryRepository;
-import ru.eshop.admin.persist.ProductRepository;
-import ru.eshop.admin.persist.ProductSpecifications;
-import ru.eshop.admin.persist.model.Category;
-import ru.eshop.admin.persist.model.Product;
+import ru.eshop.database.persist.CategoryRepository;
+import ru.eshop.database.persist.ProductRepository;
+import ru.eshop.database.persist.ProductSpecifications;
+import ru.eshop.database.persist.model.Category;
+import ru.eshop.database.persist.model.Product;
 
 import java.util.List;
 import java.util.Optional;

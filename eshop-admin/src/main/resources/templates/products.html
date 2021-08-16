@@ -1,10 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/page_header :: page_header()"/>
+
 <body>
 
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/products/new}">Add product</a>
+        </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="minCost">Minimal cost</label>
+                    <input class="form-control" id="minCost" name="minCost" placeholder="Minimal cost"
+                           th:value="${param.minCost}" type="number">
+                </div>
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="maxCost">Maximal cost</label>
+                    <input class="form-control" id="maxCost" name="maxCost" placeholder="Maximal cost"
+                           th:value="${param.maxCost}" type="number">
+                    <button class="btn btn-primary mb-2" type="submit">Apply</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_products('Id', 'id')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_products('Title', 'title')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_products('Cost', 'cost')"></th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product: ${products}">
+                    <th scope="row" th:text="${product.id}">1</th>
+                    <td th:text="${product.title}">Product</td>
+                    <td th:text="${product.price}">$100</td>
+                    <td th:text="${product.category.name}">category</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/products/{id}(id = ${product.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/products/{id}(id = ${product.id})}" th:method="delete">
+                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:unless="${products.hasContent()}">
+                    <td colspan="4">No data</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${products.hasContent() && products.isFirst() != products.isLast()}">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${products.isFirst()} ? 'disabled'">
+                        <a class="page-link" tabindex="-1" th:href="@{/products(page=${products.getNumber()}, size=${products.size}, minCost=${param.minCost},
+                       maxCost=${param.maxCost}, sortBy=${param.sortBy})}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${num == products.number + 1} ? 'active'"
+                        th:each="num : ${#numbers.sequence(1, products.totalPages)}">
+                        <a class="page-link" th:href="@{/products(page=${num}, size=${products.size}, minCost=${param.minCost},
+                       maxCost=${param.maxCost}, sortBy=${param.sortBy})}"
+                           th:text="${num}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${products.isLast()} ? 'disabled'">
+                        <a class="page-link" th:href="@{/products(page=${products.getNumber() + 1} + 1, size=${products.size}, minCost=${param.minCost},
+                       maxCost=${param.maxCost}, sortBy=${param.sortBy})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<th:block th:replace="fragments/default_scripts :: default_scripts()"/>
 </body>
 </html>

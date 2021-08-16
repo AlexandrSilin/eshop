@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form method="post" th:action="@{/users}" th:object="${user}">
+            <form method="post" th:action="@{/}" th:object="${user}">
                 <input id="id" th:field="*{id}" type="hidden">
                 <div class="form-group">
                     <label>Username</label>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/page_header :: page_header()"/>
+
+<body>
+
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/categories/new}">Add category</a>
+        </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="categoryFilter">Category filter</label>
+                    <input class="form-control" id="categoryFilter" name="categoryFilter" placeholder="Category filter"
+                           th:value="${param.categoryFilter}" type="text">
+                </div>
+                <button class="btn btn-primary mb-2" type="submit">Apply</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_categories('Id', 'id')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_categories('Name', 'name')"></th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category : ${categories}">
+                    <th scope="row" th:text="${category.id}">1</th>
+                    <td th:text="${category.name}">Category</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/categories/{id}(id = ${category.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/categories/{id}(id = ${category.id})}" th:method="delete">
+                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:unless="${categories.hasContent()}">
+                    <td colspan="3">No data</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${categories.hasContent() && categories.isFirst() != categories.isLast()}">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${categories.isFirst()} ? 'disabled'">
+                        <a class="page-link" tabindex="-1" th:href="@{/categories(page=${param.page}, size=${param.size},
+                         sortBy=${param.sortBy})}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${num == categories.number + 1} ? 'active'"
+                        th:each="num : ${#numbers.sequence(1, categories.totalPages)}">
+                        <a class="page-link"
+                           th:href="@{/products(page=${num}, size=${param.size}, sortBy=${param.sortBy})}"
+                           th:text="${num}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${categories.isLast()} ? 'disabled'">
+                        <a class="page-link" th:href="@{/products(page=${param.page + 1} + 1,
+                        size=${param.size}, sortBy=${param.sortBy})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<th:block th:replace="fragments/default_scripts :: default_scripts()"/>
+</body>
+</html>

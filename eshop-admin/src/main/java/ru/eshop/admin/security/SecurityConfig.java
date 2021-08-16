@@ -40,7 +40,7 @@ public class SecurityConfig {
                     .antMatchers("/users/**").hasRole("ADMIN")
                     .antMatchers("/new_guest").permitAll()
                     .antMatchers("/access_denied").authenticated()
-                    .antMatchers("/categories").permitAll()
+                    .antMatchers("/categories/**").permitAll()
                     .antMatchers("/categories/new").hasRole("ADMIN")
                     .and()
                     .formLogin()

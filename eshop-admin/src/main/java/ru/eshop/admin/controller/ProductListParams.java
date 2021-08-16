@@ -1,6 +1,6 @@
 package ru.eshop.admin.controller;
 
-import ru.eshop.admin.persist.model.Category;
+import ru.eshop.database.persist.model.Category;
 
 import java.math.BigDecimal;
 

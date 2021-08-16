@@ -1,4 +1,4 @@
-package ru.eshop.persist;
+package ru.eshop.database.persist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

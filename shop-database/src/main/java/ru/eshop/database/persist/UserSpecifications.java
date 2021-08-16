@@ -1,7 +1,7 @@
-package ru.eshop.admin.persist;
+package ru.eshop.database.persist;
 
 import org.springframework.data.jpa.domain.Specification;
-import ru.eshop.admin.persist.model.User;
+import ru.eshop.database.persist.model.User;
 
 public final class UserSpecifications {
     public static Specification<User> usernamePrefix(String prefix) {

@@ -1,11 +1,11 @@
-package ru.eshop.admin.persist;
+package ru.eshop.database.persist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.eshop.admin.persist.model.Category;
-import ru.eshop.admin.persist.model.Product;
+import ru.eshop.database.persist.model.Category;
+import ru.eshop.database.persist.model.Product;
 
 import java.math.BigDecimal;
 import java.util.List;

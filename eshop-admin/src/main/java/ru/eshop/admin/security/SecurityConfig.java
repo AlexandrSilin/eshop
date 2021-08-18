@@ -42,6 +42,8 @@ public class SecurityConfig {
                     .antMatchers("/access_denied").authenticated()
                     .antMatchers("/categories/**").permitAll()
                     .antMatchers("/categories/new").hasRole("ADMIN")
+                    .antMatchers("/brands/**").permitAll()
+                    .antMatchers("/brands/new").hasRole("ADMIN")
                     .and()
                     .formLogin()
                     .loginPage("/login")

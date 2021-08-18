@@ -28,6 +28,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     public Product() {
 
     }
@@ -38,6 +42,15 @@ public class Product {
         this.price = price;
         this.description = description;
         this.category = category;
+    }
+
+    public Product(Long id, String title, BigDecimal price, String description, Category category, Brand brand) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.brand = brand;
     }
 
     public String getDescription() {
@@ -78,5 +91,13 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

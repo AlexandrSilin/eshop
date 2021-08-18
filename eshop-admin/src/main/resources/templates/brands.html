@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/page_header :: page_header()"/>
+
+<body>
+
+<nav th:replace="fragments/navigation.html :: navigation">
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/brands/new}">Add brand</a>
+        </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label class="sr-only" for="brandFilter">Brand filter</label>
+                    <input class="form-control" id="brandFilter" name="brandFilter" placeholder="Brand filter"
+                           th:value="${param.brandFilter}" type="text">
+                </div>
+                <button class="btn btn-primary mb-2" type="submit">Apply</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_brands('Id', 'id')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_brands('Title', 'title')"></th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="brand : ${brands}">
+                    <th scope="row" th:text="${brand.id}">1</th>
+                    <td th:text="${brand.title}">Brand</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/brands/{id}(id = ${brand.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/brands/{id}(id = ${brand.id})}" th:method="delete">
+                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:unless="${brands.hasContent()}">
+                    <td colspan="3">No data</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${brands.hasContent() && brands.isFirst() != brands.isLast()}">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${brands.isFirst()} ? 'disabled'">
+                        <a class="page-link" tabindex="-1" th:href="@{/brands(page=${param.page}, size=${param.size},
+                         sortBy=${param.sortBy})}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                        th:classappend="${num == brands.number + 1} ? 'active'"
+                        th:each="num : ${#numbers.sequence(1, brands.totalPages)}">
+                        <a class="page-link"
+                           th:href="@{/brands(page=${num}, size=${param.size}, sortBy=${param.sortBy})}"
+                           th:text="${num}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${brands.isLast()} ? 'disabled'">
+                        <a class="page-link" th:href="@{/brands(page=${param.page + 1} + 1,
+                        size=${param.size}, sortBy=${param.sortBy})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="fragments/default_scripts :: default_scripts()"/>
+</body>
+</html>

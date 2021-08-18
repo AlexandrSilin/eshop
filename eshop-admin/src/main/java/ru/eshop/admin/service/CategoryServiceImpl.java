@@ -28,9 +28,13 @@ public class CategoryServiceImpl implements CategoryService {
         this.productService = productService;
     }
 
+    private static CategoryDto getCategoryDto(Category category) {
+        return new CategoryDto(category.getId(), category.getName());
+    }
+
     @Override
     public List<CategoryDto> findAll() {
-        return categoryRepository.findAll().stream().map(category -> new CategoryDto(category.getId(), category.getName()))
+        return categoryRepository.findAll().stream().map(CategoryServiceImpl::getCategoryDto)
                 .collect(Collectors.toList());
     }
 
@@ -44,12 +48,12 @@ public class CategoryServiceImpl implements CategoryService {
                 Optional.ofNullable(params.getPage()).orElse(1) - 1,
                 Optional.ofNullable(params.getSize()).orElse(5),
                 Sort.by(Optional.ofNullable(params.getSortField()).filter(f -> !f.isBlank()).orElse("id"))))
-                .map(category -> new CategoryDto(category.getId(), category.getName()));
+                .map(CategoryServiceImpl::getCategoryDto);
     }
 
     @Override
     public Optional<CategoryDto> findById(Long id) {
-        return categoryRepository.findById(id).map(category -> new CategoryDto(category.getId(), category.getName()));
+        return categoryRepository.findById(id).map(CategoryServiceImpl::getCategoryDto);
     }
 
     @Override

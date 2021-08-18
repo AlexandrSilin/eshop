@@ -2,18 +2,7 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
-    <changeSet author="alex_silin (generated)" id="1629294765029-1">
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-    </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-2">
-        <createTable tableName="brands">
-            <column autoIncrement="true" name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="brandsPK"/>
-            </column>
-            <column name="title" type="VARCHAR(255)"/>
-        </createTable>
-    </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-3">
+    <changeSet author="alex_silin (generated)" id="1629279548936-1">
         <createTable tableName="categories">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="categoriesPK"/>
@@ -23,7 +12,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-4">
+    <changeSet author="alex_silin (generated)" id="1629279548936-2">
         <createTable tableName="products">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="productsPK"/>
@@ -35,11 +24,10 @@
             <column name="title" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="brand_id" type="BIGINT"/>
             <column name="category_id" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-5">
+    <changeSet author="alex_silin (generated)" id="1629279548936-3">
         <createTable tableName="roles">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="rolesPK"/>
@@ -49,7 +37,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-6">
+    <changeSet author="alex_silin (generated)" id="1629279548936-4">
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="usersPK"/>
@@ -63,7 +51,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-7">
+    <changeSet author="alex_silin (generated)" id="1629279548936-5">
         <createTable tableName="users_roles">
             <column name="user_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
@@ -73,31 +61,25 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-8">
+    <changeSet author="alex_silin (generated)" id="1629279548936-6">
         <addUniqueConstraint columnNames="name" constraintName="UC_CATEGORIESNAME_COL" tableName="categories"/>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-9">
+    <changeSet author="alex_silin (generated)" id="1629279548936-7">
         <addUniqueConstraint columnNames="name" constraintName="UC_ROLESNAME_COL" tableName="roles"/>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-10">
+    <changeSet author="alex_silin (generated)" id="1629279548936-8">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_roles"
                                  constraintName="FK2o0jvgh89lemvvo17cbqvdxaa" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"
                                  validate="true"/>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-11">
-        <addForeignKeyConstraint baseColumnNames="brand_id" baseTableName="products"
-                                 constraintName="FKa3a4mpsfdf4d2y6r8ra3sc8mv" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id" referencedTableName="brands"
-                                 validate="true"/>
-    </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-12">
+    <changeSet author="alex_silin (generated)" id="1629279548936-9">
         <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="users_roles"
                                  constraintName="FKj6m8fwv7oqv74fcehir1a9ffy" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id" referencedTableName="roles"
                                  validate="true"/>
     </changeSet>
-    <changeSet author="alex_silin (generated)" id="1629294765029-13">
+    <changeSet author="alex_silin (generated)" id="1629279548936-10">
         <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="products"
                                  constraintName="FKog2rp4qthbtt2lfyhfo32lsw9" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id" referencedTableName="categories"

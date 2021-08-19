@@ -43,7 +43,8 @@ public class CategoryController {
     @GetMapping("/{id}")
     public String editCategory(Model model, @PathVariable("id") Long id) {
         logger.info("Edit category page requested");
-        model.addAttribute("category", categoryService.findById(id).orElseThrow(() -> new NotFoundException("Category not found")));
+        model.addAttribute("category", categoryService.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category not found")));
         return "category_info";
     }
 

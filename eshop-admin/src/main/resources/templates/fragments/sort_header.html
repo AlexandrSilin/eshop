@@ -20,4 +20,10 @@
         <i class="fa" th:classappend="${param.direction == 'ASC'} ? 'fa-sort-up' : 'fa-sort-down'"></i></a>
 </th>
 
+<th scope="col" th:fragment="sort_brands(header, column)">[[${header}]]
+    <a th:href="@{/brands(page=${param.page}, size=${param.size}, brandFilter=${param.brandFilter},
+        sortBy=${column}, sortDirection=${param.direction})}">
+        <i class="fa" th:classappend="${param.direction == 'ASC'} ? 'fa-sort-up' : 'fa-sort-down'"></i></a>
+</th>
+
 </html>

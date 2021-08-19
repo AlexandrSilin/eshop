@@ -63,11 +63,11 @@
                         th:classappend="${num == categories.number + 1} ? 'active'"
                         th:each="num : ${#numbers.sequence(1, categories.totalPages)}">
                         <a class="page-link"
-                           th:href="@{/products(page=${num}, size=${param.size}, sortBy=${param.sortBy})}"
+                           th:href="@{/categories(page=${num}, size=${param.size}, sortBy=${param.sortBy})}"
                            th:text="${num}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${categories.isLast()} ? 'disabled'">
-                        <a class="page-link" th:href="@{/products(page=${param.page + 1} + 1,
+                        <a class="page-link" th:href="@{/categories(page=${param.page + 1} + 1,
                         size=${param.size}, sortBy=${param.sortBy})}">Next</a>
                     </li>
                 </ul>

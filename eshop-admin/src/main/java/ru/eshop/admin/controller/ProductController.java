@@ -9,10 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.eshop.admin.dto.BrandDto;
 import ru.eshop.admin.dto.CategoryDto;
 import ru.eshop.admin.dto.ProductDto;
 import ru.eshop.admin.exceptions.NotFoundException;
 import ru.eshop.admin.service.ProductService;
+import ru.eshop.database.persist.BrandRepository;
 import ru.eshop.database.persist.CategoryRepository;
 
 import javax.validation.Valid;
@@ -24,11 +26,15 @@ public class ProductController {
     private final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
     private final CategoryRepository categoryRepository;
+    private final BrandRepository brandRepository;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryRepository categoryRepository) {
+    public ProductController(ProductService productService,
+                             CategoryRepository categoryRepository,
+                             BrandRepository brandRepository) {
         this.productService = productService;
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
     }
 
     @GetMapping
@@ -43,6 +49,7 @@ public class ProductController {
         logger.info("New product page requested");
         model.addAttribute("product", new ProductDto());
         model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("brands", brandRepository.findAll());
         return "product_info";
     }
 
@@ -50,9 +57,7 @@ public class ProductController {
     public String editProduct(Model model, @PathVariable("id") Long id) {
         logger.info("Edit product page requested");
         model.addAttribute("product", productService.findById(id).orElseThrow(() -> new NotFoundException("Product not found")));
-        model.addAttribute("categories", categoryRepository.findAll().stream()
-                .map(category -> new CategoryDto(category.getId(), category.getName())).collect(Collectors.toList()));
-        return "product_info";
+        return addCategoriesAndBrands(model);
     }
 
     @PostMapping
@@ -60,12 +65,18 @@ public class ProductController {
         logger.info("Products update page requested");
         if (result.hasErrors()) {
             logger.error(String.valueOf(result.getAllErrors()));
-            model.addAttribute("categories", categoryRepository.findAll().stream()
-                    .map(category -> new CategoryDto(category.getId(), category.getName())).collect(Collectors.toList()));
-            return "product_info";
+            return addCategoriesAndBrands(model);
         }
         productService.save(product);
         return "redirect:/products";
+    }
+
+    private String addCategoriesAndBrands(Model model) {
+        model.addAttribute("categories", categoryRepository.findAll().stream()
+                .map(category -> new CategoryDto(category.getId(), category.getName())).collect(Collectors.toList()));
+        model.addAttribute("brands", brandRepository.findAll().stream()
+                .map(brand -> new BrandDto(brand.getId(), brand.getTitle())).collect(Collectors.toList()));
+        return "product_info";
     }
 
     @DeleteMapping("/{id}")

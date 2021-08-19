@@ -19,4 +19,6 @@ public interface ProductService {
     void deleteById(Long id);
 
     List<ProductDto> findByCategory(Long categoryId);
+
+    List<ProductDto> findByBrand(Long brandId);
 }

@@ -1,3 +1,4 @@
+
 insert into users (id, age, password, username)
 values (1, 32, '$2a$10$uedJ6jkBS08x5mxZY6gV6.LAKSd202CiVutxz5VDq3TIyj9alkmIq', 'admin');
 GO

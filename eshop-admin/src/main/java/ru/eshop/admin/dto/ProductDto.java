@@ -1,8 +1,12 @@
 package ru.eshop.admin.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+import ru.eshop.database.persist.model.Picture;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductDto {
 
@@ -20,17 +24,22 @@ public class ProductDto {
 
     private BrandDto brand;
 
+    private List<Long> pictures;
+
+    private MultipartFile[] newPictures;
+
     public ProductDto() {
 
     }
 
-    public ProductDto(Long id, String title, BigDecimal price, String description, CategoryDto category, BrandDto brand) {
+    public ProductDto(Long id, String title, BigDecimal price, String description, CategoryDto category, BrandDto brand, List<Long> pictures) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.description = description;
         this.category = category;
         this.brand = brand;
+        this.pictures = pictures;
     }
 
     public Long getId() {
@@ -79,5 +88,21 @@ public class ProductDto {
 
     public void setBrand(BrandDto brand) {
         this.brand = brand;
+    }
+
+    public List<Long> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Long> pictures) {
+        this.pictures = pictures;
+    }
+
+    public MultipartFile[] getNewPictures() {
+        return newPictures;
+    }
+
+    public void setNewPictures(MultipartFile[] newPictures) {
+        this.newPictures = newPictures;
     }
 }

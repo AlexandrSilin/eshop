@@ -20,6 +20,7 @@
         <module>shop-database</module>
         <module>eshop-admin</module>
         <module>eshop-backend-api</module>
+        <module>picture-service</module>
     </modules>
 
     <properties>

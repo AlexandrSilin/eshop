@@ -34,7 +34,7 @@ public class BrandController {
     }
 
     @GetMapping("/new")
-    public String newBrand(Model model, BrandListParams params) {
+    public String newBrand(Model model) {
         model.addAttribute("brand", new BrandDto());
         return "brand_info";
     }

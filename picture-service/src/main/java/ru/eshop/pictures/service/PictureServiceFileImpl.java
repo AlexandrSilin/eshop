@@ -5,13 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.eshop.database.persist.PictureRepository;
+import ru.eshop.database.persist.ProductRepository;
 import ru.eshop.database.persist.model.Picture;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,15 +22,15 @@ import java.util.UUID;
 public class PictureServiceFileImpl implements PictureService {
 
     private static final Logger logger = LoggerFactory.getLogger(PictureServiceFileImpl.class);
-
+    private final PictureRepository pictureRepository;
+    private final ProductRepository productRepository;
     @Value("${picture.storage.path}")
     private String storagePath;
 
-    private final PictureRepository pictureRepository;
-
     @Autowired
-    public PictureServiceFileImpl(PictureRepository pictureRepository) {
+    public PictureServiceFileImpl(PictureRepository pictureRepository, ProductRepository productRepository) {
         this.pictureRepository = pictureRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -61,5 +64,31 @@ public class PictureServiceFileImpl implements PictureService {
             throw new RuntimeException(ex);
         }
         return fileName;
+    }
+
+    @Transactional
+    @Override
+    public Long deletePicture(Long id) {
+        Picture picture = pictureRepository.findById(id).orElseThrow();
+        try {
+            Files.delete(Paths.get(storagePath, picture.getFilename()));
+            productRepository.findAll().forEach(product -> {
+                if (product.getPictures().contains(picture)) {
+                    List<Picture> picturesList = product.getPictures();
+                    picturesList.remove(picture);
+                    product.setPicture(picturesList);
+                }
+            });
+            pictureRepository.deleteById(id);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return picture.getProduct().getId();
+    }
+
+    @Override
+    public Optional<Picture> findById(Long id) {
+        return pictureRepository.findById(id);
     }
 }

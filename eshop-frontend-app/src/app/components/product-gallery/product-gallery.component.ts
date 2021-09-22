@@ -10,7 +10,8 @@ export class ProductGalleryComponent implements OnInit {
 
   @Input() products: Product[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

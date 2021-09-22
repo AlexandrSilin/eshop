@@ -8,10 +8,10 @@
   </ul>
 
   <form (ngSubmit)="applyFilter()">
-    <label for="namePattern" class="form-label">Name</label>
+    <label class="form-label" for="namePattern">Name</label>
     <div class="input-group mb-3">
-      <input type="text" [(ngModel)]="productFilter.namePattern" class="form-control" name="namePattern"
-             id="namePattern" placeholder="Name" aria-label="Name">
+      <input [(ngModel)]="productFilter.namePattern" aria-label="Name" class="form-control" id="namePattern"
+             name="namePattern" placeholder="Name" type="text">
     </div>
 
     <label class="form-label" for="priceFilter">Price</label>

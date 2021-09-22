@@ -12,12 +12,13 @@ export class ProductFilterComponent implements OnInit {
 
   productFilter: ProductFilterDto = new ProductFilterDto("", 0, 0);
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
-  applyFilter(){
+  applyFilter() {
     this.filterApplied.emit(this.productFilter);
   }
 

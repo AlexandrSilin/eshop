@@ -8,13 +8,14 @@ import {Page} from "../../model/page";
 })
 export class PaginationComponent implements OnInit, OnChanges {
 
-  @Input() page? : Page;
-  numbers : number[] = [];
-  pageNumber : number = 1;
+  @Input() page?: Page;
+  numbers: number[] = [];
+  pageNumber: number = 1;
 
   @Output() goToPageEvent = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

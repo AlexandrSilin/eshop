@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Page} from "../model/page";
 import {Picture} from "../model/picture";
+import {ProductFilterDto} from "../model/product-filter-dto";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +13,14 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  public findAll() {
-    return this.http.get<Page>('/api/v1/products/all').toPromise();
-  }
-
-  public getMainPicture(id: number) {
-    return this.http.get<Picture>("http://127.0.0.1:9090/api/v1/pictures/" + id).toPromise();
+  public findAll(productFilter?: ProductFilterDto, page?: number): Observable<Page> {
+    let params = new HttpParams();
+    if (productFilter?.namePattern != null) {
+      params = params.set('namePattern', productFilter?.namePattern);
+    }
+    params = params.set("page", page != null ? page : 1);
+    params = params.set("size", 6);
+    return this.http.get<Page>('/api/v1/products/all', {params: params});
   }
 }
+

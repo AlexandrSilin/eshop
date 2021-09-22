@@ -30,8 +30,13 @@ public class ProductController {
                                     @RequestParam("page") Optional<Integer> page,
                                     @RequestParam("size") Optional<Integer> size,
                                     @RequestParam("sortField") Optional<String> sortField) {
-        return productService.findAll(categoryId, namePattern, minPrice.orElse(new BigDecimal(0L)),
-                maxPrice.orElse(new BigDecimal(Long.MAX_VALUE)), page.orElse(1) - 1, size.orElse(5),
-                sortField.filter(f -> !f.isBlank()).orElse("id"));
+        return productService.findAll(
+                categoryId,
+                namePattern,
+                minPrice.orElse(BigDecimal.ZERO),
+                maxPrice.orElse(BigDecimal.valueOf(Long.MAX_VALUE)),
+                page.orElse(1) - 1,
+                size.orElse(5),
+                sortField.filter(fld -> !fld.isBlank()).orElse("id"));
     }
 }

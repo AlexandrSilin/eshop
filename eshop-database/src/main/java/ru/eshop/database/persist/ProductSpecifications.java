@@ -19,6 +19,6 @@ public final class ProductSpecifications {
     }
 
     public static Specification<Product> filterByName(String pattern) {
-        return (root, query, builder) -> builder.like(root.get("name"), "%" + pattern + "%");
+        return (root, query, builder) -> builder.like(root.get("title"), "%" + pattern + "%");
     }
 }

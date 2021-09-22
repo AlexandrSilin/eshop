@@ -41,8 +41,12 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDto> findAll(Optional<Long> categoryId, Optional<String> namePattern, BigDecimal minPrice,
                                     BigDecimal maxPrice, Integer page, Integer size, String sortField) {
         Specification<Product> specification = Specification.where(null);
-        categoryId.ifPresent(aLong -> specification.and(ProductSpecifications.filterByCategory(aLong)));
-        namePattern.ifPresent(s -> specification.and(ProductSpecifications.filterByName(s)));
+        if (categoryId.isPresent() && categoryId.get() != -1) {
+            specification = specification.and(ProductSpecifications.filterByCategory(categoryId.get()));
+        }
+        if (namePattern.isPresent()) {
+            specification = specification.and(ProductSpecifications.filterByName(namePattern.get()));
+        }
         if (minPrice != null) {
             specification.and(ProductSpecifications.minPrice(minPrice));
         }

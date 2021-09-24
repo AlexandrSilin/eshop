@@ -11,6 +11,8 @@ import {ProductFilterComponent} from './components/product-filter/product-filter
 import {PaginationComponent} from './components/pagination/pagination.component';
 import {ProductGalleryComponent} from './components/product-gallery/product-gallery.component';
 import {ProductGalleryPageComponent} from './pages/product-gallery-page/product-gallery-page.component';
+import {OrderPageComponent} from './pages/order-page/order-page.component';
+import {CartPageComponent} from './pages/cart-page/cart-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {ProductGalleryPageComponent} from './pages/product-gallery-page/product-
     ProductFilterComponent,
     PaginationComponent,
     ProductGalleryComponent,
-    ProductGalleryPageComponent
+    ProductGalleryPageComponent,
+    OrderPageComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,

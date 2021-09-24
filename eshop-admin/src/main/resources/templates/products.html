@@ -36,8 +36,8 @@
                     <th scope="col" th:replace="fragments/sort_header :: sort_products('Id', 'id')"></th>
                     <th scope="col" th:replace="fragments/sort_header :: sort_products('Title', 'title')"></th>
                     <th scope="col" th:replace="fragments/sort_header :: sort_products('Cost', 'cost')"></th>
-                    <th scope="col" th:replace="fragments/sort_header :: sort_categories('Category', 'name')"></th>
-                    <th scope="col" th:replace="fragments/sort_header :: sort_brands('Brand', 'title')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_products('Category', 'name')"></th>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_products('Brand', 'title')"></th>
                     <th scope="col">Photo</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -49,8 +49,9 @@
                     <td th:text="${product.price}">$100</td>
                     <td th:text="${product.category.name}">Category</td>
                     <td th:text="${product.brand.title}">Brand</td>
-                    <td th:each="pic : ${product.pictures}">
-                        <img th:src="@{/picture/{id}(id = ${pic})}" height="100px" width="100px" alt="Some image"/>
+                    <td>
+                        <img alt="Some image" height="100px" th:each="pic : ${product.pictures}"
+                             th:src="@{/picture/{id}(id = ${pic})}" width="100px"/>
                     </td>
                     <td>
                         <a class="btn btn-success" th:href="@{/products/{id}(id = ${product.id})}"><i

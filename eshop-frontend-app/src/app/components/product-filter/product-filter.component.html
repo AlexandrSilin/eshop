@@ -1,0 +1,26 @@
+<div class="col-md-3 col-xs-12">
+  <ul class="list-group mb-3">
+    <li class="list-group-item active">Category 1</li>
+    <li class="list-group-item">Category 2</li>
+    <li class="list-group-item">Category 3</li>
+    <li class="list-group-item">Category 4</li>
+    <li class="list-group-item">Category 5</li>
+  </ul>
+
+  <form (ngSubmit)="applyFilter()">
+    <label class="form-label" for="namePattern">Name</label>
+    <div class="input-group mb-3">
+      <input [(ngModel)]="productFilter.namePattern" aria-label="Name" class="form-control" id="namePattern"
+             name="namePattern" placeholder="Name" type="text">
+    </div>
+
+    <label class="form-label" for="priceFilter">Price</label>
+    <div class="input-group mb-3" id="priceFilter">
+      <input aria-label="From" class="form-control" placeholder="From" type="number">
+      <span class="input-group-text">-</span>
+      <input aria-label="To" class="form-control" placeholder="To" type="number">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Apply</button>
+  </form>
+</div>

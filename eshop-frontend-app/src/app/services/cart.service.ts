@@ -19,4 +19,16 @@ export class CartService {
   public addToCart(dto: AddLineItemDto) {
     return this.http.post('/api/v1/cart', dto);
   }
+
+  clearCart() {
+    return this.http.delete('/api/v1/cart');
+  }
+
+  deleteItem(productId: number) {
+    this.http.delete(`/api/v1/cart/${productId}`)
+  }
+
+  recalculationOfCost(productId: number, qty: number | undefined) {
+    return this.http.post(`/api/v1/cart/${productId}`, qty);
+  }
 }

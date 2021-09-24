@@ -35,8 +35,28 @@ public class CartController {
         return cartService.getLineItems();
     }
 
+    @PostMapping(path = "/{productId}", produces = "application/json", consumes = "application/json")
+    public List<LineItem> recalculateOfCost(@PathVariable Long productId, @RequestBody Integer qty) {
+        logger.info("Recalculate productId = {}, qty = {}", productId, qty);
+        cartService.recalculateOfCost(productId, qty);
+        return cartService.getLineItems();
+    }
+
+    @DeleteMapping
+    public void clearCart() {
+        logger.info("Clear cart");
+        cartService.clearCart();
+    }
+
+    @DeleteMapping("/{productId}")
+    public void deleteItem(@PathVariable Long productId) {
+        logger.info("Delete item id = {}", productId);
+        cartService.deleteItem(productId);
+    }
+
     @GetMapping("/all")
     public AllCartDto findAll() {
+        logger.info("Get all cart");
         return new AllCartDto(cartService.getLineItems(), cartService.getSubTotal());
     }
 }

@@ -16,4 +16,10 @@ public interface CartService {
     List<LineItem> getLineItems();
 
     BigDecimal getSubTotal();
+
+    void recalculateOfCost(Long productId, Integer qty);
+
+    void deleteItem(Long id);
+
+    void clearCart();
 }

@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Credentials} from "../model/credentials";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Credentials} from "../model/credentials";
 import {map} from "rxjs/operators";
+import {AuthResult} from "../model/auth-result";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class AuthService {
 
   private currentUser?: Credentials;
 
+  public redirectUrl?: string;
+
   constructor(private http: HttpClient) {
     let data = localStorage.getItem('current_user');
     if (data) {
@@ -17,17 +21,19 @@ export class AuthService {
     }
   }
 
-  authenticate(credentials: Credentials) {
+  authenticate(credentials: Credentials): Observable<AuthResult> {
+
     const headers = new HttpHeaders(credentials ? {
-      authorization: 'Basic' + btoa(credentials.username + ':' + credentials.password)
+      authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
     } : {});
 
     return this.http.get('/api/v1/login', {headers: headers})
-      .pipe(map(response => {
-          if ('username' in response) {
-            this.currentUser = response as Credentials;
-            localStorage.setItem('current_user', JSON.stringify(response));
-            return response;
+      .pipe(
+        map(resp => {
+          if ('username' in resp) {
+            this.currentUser = resp as Credentials;
+            localStorage.setItem('current_user', JSON.stringify(resp));
+            return new AuthResult(this.currentUser, this.redirectUrl);
           }
           throw new Error('Authentication error');
         })
@@ -37,12 +43,12 @@ export class AuthService {
   logout() {
     if (this.isAuthenticated()) {
       this.currentUser = undefined;
-      localStorage.removeItem('current_user');
+      localStorage.removeItem("current_user");
       this.http.post('/api/v1/logout', {}).subscribe();
     }
   }
 
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     return !!this.currentUser;
   }
 }

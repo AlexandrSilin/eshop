@@ -10,9 +10,8 @@ import {Observable} from "rxjs";
 })
 export class AuthService {
 
-  private currentUser?: Credentials;
-
   public redirectUrl?: string;
+  private currentUser?: Credentials;
 
   constructor(private http: HttpClient) {
     let data = localStorage.getItem('current_user');

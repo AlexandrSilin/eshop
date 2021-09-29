@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 export const REGISTER_URL = 'register'
 
@@ -9,7 +9,8 @@ export const REGISTER_URL = 'register'
 })
 export class RegisterPageComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

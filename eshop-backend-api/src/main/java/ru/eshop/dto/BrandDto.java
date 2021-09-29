@@ -1,5 +1,8 @@
 package ru.eshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class BrandDto {
 
     private Long id;

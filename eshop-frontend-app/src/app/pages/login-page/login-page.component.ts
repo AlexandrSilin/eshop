@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Credentials} from "../../model/credentials";
 import {Router} from "@angular/router";
@@ -17,7 +17,8 @@ export class LoginPageComponent implements OnInit {
 
   isError: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }

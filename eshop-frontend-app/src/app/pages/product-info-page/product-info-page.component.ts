@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 export const PRODUCT_INFO_URL = "product/:id"
 
@@ -9,7 +9,8 @@ export const PRODUCT_INFO_URL = "product/:id"
 })
 export class ProductInfoPageComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

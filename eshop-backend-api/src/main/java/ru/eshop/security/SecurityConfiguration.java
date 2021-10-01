@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,11 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityConfiguration {
 
     @Autowired
-    public void authConfigure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles("ADMIN", "SUPER_ADMIN");
+    public void authConfigure(AuthenticationManagerBuilder auth, UserAuthService userAuthService) throws Exception {
+        auth.userDetailsService(userAuthService);
     }
 
     @Configuration

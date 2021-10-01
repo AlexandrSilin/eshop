@@ -39,7 +39,7 @@
       <div class="card-body">
         <h2>Order summary</h2>
         <p>Subtotal: {{content?.subtotal}}</p>
-        <button class="btn btn-primary me-2">Create Order</button>
+        <button (click)="createOrder(content?.subtotal)" class="btn btn-primary me-2">Create Order</button>
       </div>
     </div>
   </div>

@@ -37,4 +37,11 @@ export class CartPageComponent implements OnInit {
     this.cartService.recalculationOfCost(productId, +newQty).subscribe();
     this.findAll()
   }
+
+  createOrder(subtotal: number | undefined) {
+    if (subtotal) {
+      this.cartService.createOrder(subtotal).subscribe();
+    }
+    this.cartService.clearCart();
+  }
 }

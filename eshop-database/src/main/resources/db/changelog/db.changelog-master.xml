@@ -7,7 +7,11 @@
         <runningAs username="postgres"/>
     </preConditions>
     <include file="v-1.0/db.changelog-20210823-105703243.xml" relativeToChangelogFile="true"/>
+    <include file="v-2.0/db.changelog-20211001-115131305.xml" relativeToChangelogFile="true"/>
     <changeSet id="1000" author="alex_silin">
         <tagDatabase tag="v-1.0"/>
+    </changeSet>
+    <changeSet id="2000" author="alex_silin">
+        <tagDatabase tag="v-2.0"/>
     </changeSet>
 </databaseChangeLog>

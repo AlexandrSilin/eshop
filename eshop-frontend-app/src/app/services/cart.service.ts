@@ -31,4 +31,8 @@ export class CartService {
   recalculationOfCost(productId: number, qty: number | undefined) {
     return this.http.post(`/api/v1/cart/${productId}`, qty);
   }
+
+  createOrder(subtotal: number) : Observable<any>{
+    return this.http.post(`/api/v1/order/`, subtotal);
+  }
 }

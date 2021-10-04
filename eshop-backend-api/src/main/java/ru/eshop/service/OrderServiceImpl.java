@@ -11,8 +11,11 @@ import ru.eshop.database.persist.model.Order;
 import ru.eshop.database.persist.model.OrderLineItem;
 import ru.eshop.database.persist.model.OrderStatus;
 import ru.eshop.database.persist.model.User;
+import ru.eshop.dto.OrderDto;
+import ru.eshop.dto.OrderLineItemDto;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,21 +38,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findAllByUsername(String username) {
+    public List<OrderDto> findAllByUsername(String username) {
         logger.info("Get all by username = {}", username);
-        return orderRepository.findAllByUsername(username);
+        return orderRepository.findAllByUsername(username).stream().map(order -> new OrderDto(
+                order.getId(),
+                order.getTime(),
+                order.getStatus().toString(),
+                order.getUser().getUsername(),
+                order.getOrderLineItems().stream().map(lineItem -> new OrderLineItemDto(lineItem.getId(),
+                                lineItem.getOrder().getId(), lineItem.getProduct().getId(), lineItem.getProduct().getTitle(),
+                                lineItem.getPrice(), lineItem.getQty(), lineItem.getColor(), lineItem.getMaterial()))
+                        .collect(Collectors.toList()),
+                order.getPrice()
+        )).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public void createOrder(String username) {
+    public void createOrder(String username, BigDecimal subtotal) {
         logger.info("Create order for username = {}", username);
         if (cartService.getLineItems().isEmpty()) {
             logger.info("Cart is empty");
             return;
         }
         User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        Order order = new Order(null, LocalDateTime.now(), user, OrderStatus.CREATED);
+        Order order = new Order(null, LocalDateTime.now(), user, OrderStatus.CREATED, subtotal);
         order.setOrderLineItems(cartService.getLineItems().stream().map(lineItem -> new OrderLineItem(null,
                 order,
                 productRepository.findById(lineItem.getProductId())

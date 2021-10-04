@@ -32,7 +32,7 @@ export class CartService {
     return this.http.post(`/api/v1/cart/${productId}`, qty);
   }
 
-  createOrder(subtotal: number) : Observable<any>{
-    return this.http.post(`/api/v1/order/`, subtotal);
+  createOrder(subtotal: number) {
+    return this.http.post(`/api/v1/order/`, subtotal).toPromise();
   }
 }

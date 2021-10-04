@@ -20,5 +20,4 @@ export class OrderPageComponent implements OnInit {
     this.orderService.findOrdersByUser()
       .subscribe(orders => this.orders = orders, error => console.error(error))
   }
-
 }

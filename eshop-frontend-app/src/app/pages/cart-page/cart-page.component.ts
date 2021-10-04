@@ -42,8 +42,8 @@ export class CartPageComponent implements OnInit {
 
   createOrder(subtotal: number | undefined) {
     if (subtotal) {
-      this.router.navigate([ORDERS_URL])
-        .then(() => this.cartService.createOrder(subtotal).then(() => this.clearCart()));
+      this.cartService.createOrder(subtotal)
+        .then(() => this.router.navigate([ORDERS_URL]).then(() => this.clearCart()));
     }
   }
 }

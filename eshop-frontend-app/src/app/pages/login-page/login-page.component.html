@@ -1,0 +1,24 @@
+<div class="row py-2">
+  <div class="col-md-12 col-xs-12">
+
+    <form (submit)="login()">
+      <div *ngIf="isError" class="alert alert-danger" role="alert">
+        Authentication error. Check login and password.
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input [(ngModel)]="credentials.username" class="form-control" id="username" name="username" type="text">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input [(ngModel)]="credentials.password" class="form-control" id="password" name="username" type="password">
+      </div>
+
+      <button class="btn btn-primary me-3" type="submit">Login</button>
+      <a routerLink="/register">Register</a>
+    </form>
+
+  </div>
+</div>

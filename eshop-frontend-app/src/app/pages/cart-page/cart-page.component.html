@@ -1,0 +1,47 @@
+<div class="row py-2">
+
+  <div class="col-md-9 col-xs-12 mb-3">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product name</th>
+        <th scope="col">Count</th>
+        <th scope="col">Price</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let lineItem of content?.lineItems">
+        <th scope="row">1</th>
+        <td>{{lineItem.productDto.title}}</td>
+        <td>
+          <input #newQty class="form-control w-25" min=1 name="newQty" oninput="validity.valid||(value=1);"
+                 type="number"
+                 value="{{lineItem.qty}}"/>
+        </td>
+        <td>{{lineItem.itemTotal}}</td>
+        <td>
+          <a (click)="recalculationOfCost(lineItem.productId, newQty.value)" class="btn btn-success me-2"><i
+            class="fas fa-check-circle"></i></a>
+          <a (click)="deleteItem(lineItem.productId)" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+    <button (click)="clearCart()" class="btn btn-danger">Clear Cart</button>
+  </div>
+
+  <div class="col-md-3 col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <h2>Order summary</h2>
+        <p>Subtotal: {{content?.subtotal}}</p>
+        <button (click)="createOrder(content?.subtotal)" class="btn btn-primary me-2">Create Order</button>
+      </div>
+    </div>
+  </div>
+
+</div>

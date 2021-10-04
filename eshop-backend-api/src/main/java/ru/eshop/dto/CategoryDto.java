@@ -1,7 +1,10 @@
 package ru.eshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Objects;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class CategoryDto {
 
     private Long id;

@@ -7,27 +7,22 @@
         <groupId>ru.eshop</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>ru.eshop</groupId>
-    <artifactId>eshop-config-server</artifactId>
+    <artifactId>eshop-eureka</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eshop-config-server</name>
-    <description>eshop-config-server</description>
+    <name>eshop-eureka</name>
+    <description>eshop-eureka</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>

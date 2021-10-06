@@ -22,6 +22,7 @@
         <module>picture-service</module>
         <module>eshop-database</module>
         <module>eshop-config-server</module>
+        <module>eshop-eureka</module>
     </modules>
 
     <properties>

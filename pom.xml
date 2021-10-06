@@ -23,6 +23,7 @@
         <module>eshop-database</module>
         <module>eshop-config-server</module>
         <module>eshop-eureka</module>
+        <module>eshop-gateway</module>
     </modules>
 
     <properties>

@@ -19,6 +19,7 @@
     <modules>
         <module>eshop-admin</module>
         <module>eshop-backend-api</module>
+        <module>picture-service-app</module>
         <module>picture-service</module>
         <module>eshop-database</module>
         <module>eshop-config-server</module>

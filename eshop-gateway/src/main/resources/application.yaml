@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 9090
 
 eureka:
   client:
@@ -13,11 +13,11 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: picture-service
-          uri: lb://SHOP-PICTURE-SERVICE
+        - id: picture-service-app
+          uri: lb://PICTURE-SERVICE-APP
           predicates:
             - Path=/api/v1/picture/**
         - id: backend
-          uri: lb://SHOP-BACKEND-API
+          uri: lb://BACKEND
           predicates:
             - Path=/api/v1/**

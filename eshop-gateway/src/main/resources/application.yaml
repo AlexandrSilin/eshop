@@ -21,3 +21,7 @@ spring:
           uri: lb://BACKEND
           predicates:
             - Path=/api/v1/**
+        - id: ws
+          uri: lb:ws://BACKEND
+          predicates:
+            - Path=/api/v1/**

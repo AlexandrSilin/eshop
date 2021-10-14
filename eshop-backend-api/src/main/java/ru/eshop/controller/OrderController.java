@@ -3,10 +3,11 @@ package ru.eshop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import ru.eshop.database.persist.model.Order;
 import ru.eshop.database.persist.model.OrderStatus;
+import ru.eshop.dto.OrderDto;
 import ru.eshop.service.OrderService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -20,13 +21,13 @@ public class OrderController {
     }
 
     @GetMapping()
-    public List<Order> findAll(Authentication auth) {
+    public List<OrderDto> findAll(Authentication auth) {
         return orderService.findAllByUsername(auth.getName());
     }
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public void createOrder(Authentication auth) {
-        orderService.createOrder(auth.getName());
+    public void createOrder(Authentication auth, @RequestBody BigDecimal subtotal) {
+        orderService.createOrder(auth.getName(), subtotal);
     }
 
     @PostMapping("/{orderId}")

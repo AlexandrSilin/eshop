@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../services/cart.service";
 import {AllCartDto} from "../../model/all-cart-dto";
+import {Router} from '@angular/router';
+import {ORDERS_URL} from "../order-page/order-page.component";
 
 export const CART_URL = 'cart'
 
@@ -12,7 +14,7 @@ export const CART_URL = 'cart'
 export class CartPageComponent implements OnInit {
   content?: AllCartDto;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -40,8 +42,8 @@ export class CartPageComponent implements OnInit {
 
   createOrder(subtotal: number | undefined) {
     if (subtotal) {
-      this.cartService.createOrder(subtotal).subscribe();
+      this.cartService.createOrder(subtotal)
+        .then(() => this.router.navigate([ORDERS_URL]).then(() => this.clearCart()));
     }
-    this.cartService.clearCart();
   }
 }

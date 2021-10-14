@@ -1,6 +1,7 @@
 package ru.eshop.database.persist.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,14 +27,18 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLineItem> orderLineItems;
 
+    @Column(name = "price")
+    private BigDecimal price;
+
     public Order() {
     }
 
-    public Order(Long id, LocalDateTime time, User user, OrderStatus status) {
+    public Order(Long id, LocalDateTime time, User user, OrderStatus status, BigDecimal price) {
         this.id = id;
         this.time = time;
         this.user = user;
         this.status = status;
+        this.price = price;
     }
 
     public Long getId() {
@@ -74,5 +79,13 @@ public class Order {
 
     public void setOrderLineItems(List<OrderLineItem> orderLineItems) {
         this.orderLineItems = orderLineItems;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal subtotal) {
+        this.price = subtotal;
     }
 }

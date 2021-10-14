@@ -1,0 +1,27 @@
+server:
+  port: 9090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: picture-service-app
+          uri: lb://PICTURE-SERVICE-APP
+          predicates:
+            - Path=/api/v1/picture/**
+        - id: backend
+          uri: lb://BACKEND
+          predicates:
+            - Path=/api/v1/**
+        - id: ws
+          uri: lb:ws://BACKEND
+          predicates:
+            - Path=/api/v1/**

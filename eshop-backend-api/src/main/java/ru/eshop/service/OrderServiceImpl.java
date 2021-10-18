@@ -84,14 +84,16 @@ public class OrderServiceImpl implements OrderService {
         rabbitTemplate.convertAndSend("order.exchange", "new_order",
                 new OrderMessage(order.getId(), order.getStatus().name()));
         new Thread(() -> {
-            synchronized (order) {
-                for (OrderStatus status : OrderStatus.values()) {
-                    try {
-                        wait(10000);
-                        changeOrderStatus(order.getId(), status);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            for (OrderStatus status : OrderStatus.values()) {
+                try {
+                    Thread.sleep(10000);
+                    changeOrderStatus(order.getId(), status);
+                    logger.info("Changing status for order '{}' to '{}'", order.getId(), status.name());
+                    rabbitTemplate.convertAndSend("order.exchange", "processed_order",
+                            new OrderMessage(order.getId(), status.name()));
+                } catch (InterruptedException e) {
+                    logger.error("Interrupted", e);
+                    break;
                 }
             }
         }).start();
@@ -103,7 +105,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus(orderStatus);
         orderRepository.save(order);
-        rabbitTemplate.convertAndSend(order);
     }
 
     @RabbitListener(queues = "processed.order.queue")

@@ -42,6 +42,10 @@ public class ImportConfiguration {
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final PictureService pictureService;
+    @Value("${source.directory.path}")
+    private String sourceDirPath;
+    @Value("${dest.directory.path}")
+    private String destDirPath;
 
     @Autowired
     public ImportConfiguration(EntityManagerFactory entityManagerFactory,
@@ -53,12 +57,6 @@ public class ImportConfiguration {
         this.brandRepository = brandRepository;
         this.pictureService = pictureService;
     }
-
-    @Value("${source.directory.path}")
-    private String sourceDirPath;
-
-    @Value("${dest.directory.path}")
-    private String destDirPath;
 
     @Bean
     public MessageSource<File> sourceDirectory() {

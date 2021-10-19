@@ -25,6 +25,7 @@
         <module>eshop-config-server</module>
         <module>eshop-eureka</module>
         <module>eshop-gateway</module>
+        <module>spring-integration</module>
     </modules>
 
     <properties>

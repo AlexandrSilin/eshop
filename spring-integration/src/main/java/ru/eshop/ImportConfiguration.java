@@ -22,11 +22,17 @@ import ru.eshop.database.persist.BrandRepository;
 import ru.eshop.database.persist.CategoryRepository;
 import ru.eshop.database.persist.model.Brand;
 import ru.eshop.database.persist.model.Category;
+import ru.eshop.database.persist.model.Picture;
 import ru.eshop.database.persist.model.Product;
+import ru.eshop.pictures.service.PictureService;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -35,14 +41,17 @@ public class ImportConfiguration {
     private final EntityManagerFactory entityManagerFactory;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
+    private final PictureService pictureService;
 
     @Autowired
     public ImportConfiguration(EntityManagerFactory entityManagerFactory,
                                CategoryRepository categoryRepository,
-                               BrandRepository brandRepository) {
+                               BrandRepository brandRepository,
+                               PictureService pictureService) {
         this.entityManagerFactory = entityManagerFactory;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
+        this.pictureService = pictureService;
     }
 
     @Value("${source.directory.path}")
@@ -96,8 +105,21 @@ public class ImportConfiguration {
         if (brands.isEmpty()) {
             throw new RuntimeException("Brand is null");
         }
-        return new Product(null, newData[0], new BigDecimal(newData[1]), newData[2],
+        Product product = new Product(null, newData[0], new BigDecimal(newData[1]), newData[2],
                 categories.get(0), brands.get(0));
+        if (newData.length > 5 && !newData[5].isBlank()) {
+            try {
+                Path pic = Path.of(newData[5]);
+                byte[] picData = Files.readAllBytes(pic);
+                String filename = pictureService.createPicture(picData);
+                Picture picture = new Picture(null, newData[5], "image/svg+xml", filename, product);
+                List<Picture> pictures = new ArrayList<>();
+                pictures.add(picture);
+                product.setPicture(pictures);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return product;
     }
 }
-

@@ -83,6 +83,20 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
         rabbitTemplate.convertAndSend("order.exchange", "new_order",
                 new OrderMessage(order.getId(), order.getStatus().name()));
+        new Thread(() -> {
+            for (OrderStatus status : OrderStatus.values()) {
+                try {
+                    Thread.sleep(10000);
+                    changeOrderStatus(order.getId(), status);
+                    logger.info("Changing status for order '{}' to '{}'", order.getId(), status.name());
+                    rabbitTemplate.convertAndSend("order.exchange", "processed_order",
+                            new OrderMessage(order.getId(), status.name()));
+                } catch (InterruptedException e) {
+                    logger.error("Interrupted", e);
+                    break;
+                }
+            }
+        }).start();
     }
 
     @Override

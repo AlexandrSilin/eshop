@@ -23,8 +23,10 @@
         <module>picture-service</module>
         <module>eshop-database</module>
         <module>eshop-config-server</module>
+        <module>eshop-delivery-service</module>
         <module>eshop-eureka</module>
         <module>eshop-gateway</module>
+        <module>spring-integration</module>
     </modules>
 
     <properties>

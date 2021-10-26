@@ -1,20 +1,17 @@
 version: '3'
 services:
-  #db:
-  #    image: postgres
-  #    restart: always
-  #    environment:
-  #      POSTGRES_PASSWORD: password
-  #    ports:
-  #    - 5432:5432
+  db:
+    image: postgres:9.5
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USERNAME: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  #image: mysql:8.0.23
-  #environment:
-  #  MYSQL_ROOT_PASSWORD: "root"
-  #ports:
-  #  - 3306:3306
-  #volumes:
-  # - mysql-data:/var/lib/mysql
   rabbitmq:
     image: 'bitnami/rabbitmq:latest'
     ports:
@@ -23,10 +20,72 @@ services:
 
   redis:
     image: 'bitnami/redis:latest'
+    hostname: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - 6379:6379
 
-  #volumes:
-  #mysql-data:
+  eshop-eureka:
+    image: registry.heroku.com/eshop-eureka/web:latest
+    ports:
+      - 8761:8761
+    command: bash -c "/apps/wait-for-service.sh db 5432 && /apps/entrypoint.sh"
+
+  eshop-config-server:
+    image: registry.heroku.com/eshop-config-server/web:latest
+    ports:
+      - 8888:8888
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+    command: bash -c "/apps/wait-for-service.sh eshop-eureka 8761 && /apps/entrypoint.sh"
+
+  eshop-gateway:
+    image: registry.heroku.com/eshop-gateway/web:latest
+    ports:
+      - 9090:9090
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+    command: bash -c "/apps/wait-for-service.sh eshop-eureka 8761 && /apps/entrypoint.sh"
+
+  eshop-delivery-service:
+    image: registry.heroku.com/eshop-delivery-service/web:latest
+    ports:
+      - 9091:9091
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+    command: bash -c "/apps/wait-for-service.sh eshop-config-server 8888 && /apps/entrypoint.sh"
+
+  eshop-admin:
+    image: registry.heroku.com/eshop-admin/web:latest
+    ports:
+      - 8081:8081
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+    volumes:
+      - file-storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh eshop-config-server 8888 && /apps/entrypoint.sh"
+
+  eshop-picture-service:
+    image: registry.heroku.com/picture-service-app/web:latest
+    ports:
+      - 9092:9092
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+    volumes:
+      - file-storage:/var/storage
+    command: bash -c "/apps/wait-for-service.sh eshop-backend-api 9093 && /apps/entrypoint.sh"
+
+  eshop-backend-api:
+    image: registry.heroku.com/eshop-backend-api/web:latest
+    ports:
+      - 9093:9093
+    environment:
+      eureka.client.service-url.defaultZone: "http://eshop-eureka:8761/eureka"
+      spring.redis.host: "redis"
+    command: bash -c "/apps/wait-for-service.sh eshop-delivery-service 9091 && /apps/wait-for-redis.sh redis 6379 &&
+      /apps/entrypoint.sh"
+
+volumes:
+  postgres_data_local:
+  file-storage:

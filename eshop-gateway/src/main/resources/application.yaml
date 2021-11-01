@@ -4,7 +4,8 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eshop-eureka:8761/eureka/
+#      defaultZone: http://eshop-eureka:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
     fetch-registry: true
 
 spring:
@@ -21,7 +22,7 @@ spring:
           uri: lb://BACKEND
           predicates:
             - Path=/api/v1/**
-        - id: backend-ws
-          uri: lb:ws://BACKEND
+        - id: delivery-ws
+          uri: lb:ws://DELIVERY-SERVICE
           predicates:
             - Path=/api/v1/**

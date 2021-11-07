@@ -55,8 +55,8 @@ public class OrderServiceImpl implements OrderService {
                 order.getStatus().toString(),
                 order.getUser().getUsername(),
                 order.getOrderLineItems().stream().map(lineItem -> new OrderLineItemDto(lineItem.getId(),
-                                lineItem.getOrder().getId(), lineItem.getProduct().getId(), lineItem.getProduct().getTitle(),
-                                lineItem.getPrice(), lineItem.getQty(), lineItem.getColor(), lineItem.getMaterial()))
+                        lineItem.getOrder().getId(), lineItem.getProduct().getId(), lineItem.getProduct().getTitle(),
+                        lineItem.getPrice(), lineItem.getQty(), lineItem.getColor(), lineItem.getMaterial()))
                         .collect(Collectors.toList()),
                 order.getPrice()
         )).collect(Collectors.toList());

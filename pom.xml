@@ -27,6 +27,7 @@
         <module>eshop-eureka</module>
         <module>eshop-gateway</module>
         <module>spring-integration</module>
+        <module>eshop-ui-test</module>
     </modules>
 
     <properties>

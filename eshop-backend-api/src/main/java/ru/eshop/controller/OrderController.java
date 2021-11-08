@@ -1,6 +1,7 @@
 package ru.eshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.eshop.database.persist.model.OrderStatus;
@@ -10,6 +11,7 @@ import ru.eshop.service.OrderService;
 import java.math.BigDecimal;
 import java.util.List;
 
+@PreAuthorize("isAuthenticated()")
 @RestController
 @RequestMapping("/order")
 public class OrderController {

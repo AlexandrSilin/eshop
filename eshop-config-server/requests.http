@@ -1,4 +1,4 @@
-GET http://192.168.23.8:8888/admin/user
+GET http://192.168.23.8:8888/admin/dev
 
 ###
 

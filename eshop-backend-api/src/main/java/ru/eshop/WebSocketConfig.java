@@ -1,7 +1,5 @@
 package ru.eshop;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -13,7 +11,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    public static Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {

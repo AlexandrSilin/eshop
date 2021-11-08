@@ -30,8 +30,8 @@
         <form class="form-inline my-2 my-lg-0"
               sec:authorize="isAuthenticated()" th:action="@{/logout}"
               th:method="post">
-            <button class="btn btn-outline-success my-2 my-sm-0">
-                Logout <span sec:authentication="principal.username"></span>
+            <button id="btn-logout" class="btn btn-outline-success my-2 my-sm-0">
+                Logout&nbsp;<span id="user" sec:authentication="principal.username"></span>
             </button>
         </form>
     </div>

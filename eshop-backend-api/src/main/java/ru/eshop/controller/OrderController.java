@@ -27,7 +27,7 @@ public class OrderController {
         return orderService.findAllByUsername(auth.getName());
     }
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(consumes = "application/json")
     public void createOrder(Authentication auth, @RequestBody BigDecimal subtotal) {
         orderService.createOrder(auth.getName(), subtotal);
     }

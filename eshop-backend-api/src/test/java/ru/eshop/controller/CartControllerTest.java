@@ -74,8 +74,8 @@ public class CartControllerTest {
         Product product = productRepository.findById(1L).orElseThrow();
         LineItemDto item = new LineItemDto(product.getId(), 1, "color", "material");
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/cart")
-                .content(new ObjectMapper().writeValueAsString(item))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(new ObjectMapper().writeValueAsString(item))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         ObjectMapper mapper = new ObjectMapper();
         List<Map<String, Object>> myObjects = mapper.readValue(response, new TypeReference<>() {

@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LoginSteps {
     private static WebDriver webDriver;
 
-    @Given("I open web browser")
+    @Given("I open web browser for login test")
     public void iOpenWebBrowser() {
         webDriver = DriverInitializer.getDriver();
         webDriver.manage().window().maximize();
@@ -41,7 +41,6 @@ public class LoginSteps {
 
     @Then("name should be {string}")
     public void nameShouldBe(String arg0) throws Exception {
-        Thread.sleep(3000);
         assertThat(webDriver.findElement(By.id("user")).getText()).isEqualTo(arg0);
     }
 
@@ -58,6 +57,8 @@ public class LoginSteps {
 
     @After
     public void quitBrowser() {
-        webDriver.quit();
+        if (webDriver != null) {
+            webDriver.quit();
+        }
     }
 }

@@ -62,15 +62,15 @@ public class ProductControllerTest {
     @Test
     public void testProductDetails() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/products/all")
-                .param("categoryId", String.valueOf(1L))
-                .param("namePattern", "test")
-                .param("minPrice", String.valueOf(0))
-                .param("maxPrice", String.valueOf(99999))
-                .param("page", String.valueOf(1))
-                .param("size", String.valueOf(5))
-                .param("sortField", "id")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .get("/products/all")
+                        .param("categoryId", String.valueOf(1L))
+                        .param("namePattern", "test")
+                        .param("minPrice", String.valueOf(0))
+                        .param("maxPrice", String.valueOf(99999))
+                        .param("page", String.valueOf(1))
+                        .param("size", String.valueOf(5))
+                        .param("sortField", "id")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].title", is("testProduct")));

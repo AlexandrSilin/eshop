@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/categories/new}">Add category</a>
+            <a class="btn btn-primary" id="add_category" th:href="@{/categories/new}">Add category</a>
         </div>
         <div class="col-12 mt-3">
             <form class="form-inline" th:method="get">
@@ -34,14 +34,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="category : ${categories}">
+                <tr id="category" th:each="category : ${categories}">
                     <th scope="row" th:text="${category.id}">1</th>
-                    <td th:text="${category.name}">Category</td>
+                    <td id="category_name" th:text="${category.name}">Category</td>
                     <td>
                         <a class="btn btn-success" th:href="@{/categories/{id}(id = ${category.id})}"><i
                                 class="fas fa-edit"></i></a>
                         <form class="d-inline" th:action="@{/categories/{id}(id = ${category.id})}" th:method="delete">
-                            <button class="btn btn-danger" type="submit"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger" id="delete" type="submit"><i class="far fa-trash-alt"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

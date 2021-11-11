@@ -1,11 +1,7 @@
-GET http://192.168.23.8:8888/admin/dev
+GET http://localhost:8888/admin/dev
 
 ###
 
-GET http://localhost:8888/config/application.properties
-
-###
-
-GET http://localhost:8888/aaa/bbb
+GET http://localhost:8888/admin/docker
 
 ###

@@ -74,8 +74,8 @@ public class CartControllerTest {
         Product product = productRepository.findById(1L).orElseThrow();
         LineItemDto item = new LineItemDto(product.getId(), 1, "color", "material");
         String response = mockMvc.perform(MockMvcRequestBuilders.post("/cart")
-                .content(new ObjectMapper().writeValueAsString(item))
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(new ObjectMapper().writeValueAsString(item))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         ObjectMapper mapper = new ObjectMapper();
         List<Map<String, Object>> myObjects = mapper.readValue(response, new TypeReference<>() {
@@ -83,5 +83,52 @@ public class CartControllerTest {
         assertNotNull(myObjects);
         assertEquals(1, myObjects.size());
         assertEquals(1, myObjects.get(0).get("productId"));
+    }
+
+    @Test
+    public void testGetCart() throws Exception {
+        String response = mockMvc.perform(MockMvcRequestBuilders.get("/cart/all"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(response, Map.class);
+        assertNotNull(map);
+        assertEquals(0, ((List) map.get("lineItems")).size());
+    }
+
+    @Test
+    public void testClearCart() throws Exception {
+        Product product = productRepository.findById(1L).orElseThrow();
+        LineItemDto item = new LineItemDto(product.getId(), 1, "color", "material");
+        mockMvc.perform(MockMvcRequestBuilders.post("/cart")
+                        .content(new ObjectMapper().writeValueAsString(item))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/cart"));
+        String response = mockMvc.perform(MockMvcRequestBuilders.get("/cart/all"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(response, Map.class);
+        assertEquals(0, ((List) map.get("lineItems")).size());
+    }
+
+    @Test
+    public void testDeleteItem() throws Exception {
+        Product product = productRepository.findById(1L).orElseThrow();
+        LineItemDto item = new LineItemDto(product.getId(), 1, "color", "material");
+        String response = mockMvc.perform(MockMvcRequestBuilders.post("/cart")
+                        .content(new ObjectMapper().writeValueAsString(item))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Map<String, Object>> myObjects = mapper.readValue(response, new TypeReference<>() {
+        });
+        assertNotNull(myObjects);
+        assertEquals(1, myObjects.size());
+        assertEquals(1, myObjects.get(0).get("productId"));
+        mockMvc.perform(MockMvcRequestBuilders.delete("/cart/" + product.getId())).andExpect(status().isOk());
+        response = mockMvc.perform(MockMvcRequestBuilders.get("/cart/all"))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        Map<String, Object> map = mapper.readValue(response, Map.class);
+        assertEquals(0, ((List) map.get("lineItems")).size());
     }
 }

@@ -1,16 +1,16 @@
 version: '3'
 services:
-  db:
-    image: postgres:9.5
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USERNAME: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  #  db:
+  #    image: postgres:9.5
+  #    restart: always
+  #    environment:
+  #      POSTGRES_PASSWORD: postgres
+  #      POSTGRES_USERNAME: postgres
+  #    ports:
+  #      - 5432:5432
+  #    volumes:
+  #      - postgres_data_local:/var/lib/postgresql/data
+  #      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   rabbitmq:
     image: 'bitnami/rabbitmq:latest'
@@ -20,7 +20,6 @@ services:
 
   redis:
     image: 'bitnami/redis:latest'
-    hostname: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
@@ -86,6 +85,6 @@ services:
 #    command: bash -c "/apps/wait-for-service.sh eshop-delivery-service 9091 && /apps/wait-for-redis.sh redis 6379 &&
 #      /apps/entrypoint.sh"
 
-volumes:
-  postgres_data_local:
+#volumes:
+#  postgres_data_local:
 #  file-storage:

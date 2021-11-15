@@ -9,7 +9,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class RabbitMQConfig {
 
     @Bean
@@ -33,7 +35,7 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(newOrderQueue)
                 .to(orderExchange)
-                .with("new_order"); // routing key
+                .with("new_order");
     }
 
     @Bean
@@ -42,7 +44,7 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(processedOrderQueue)
                 .to(orderExchange)
-                .with("processed_order"); // routing key
+                .with("processed_order");
     }
 
     @Bean

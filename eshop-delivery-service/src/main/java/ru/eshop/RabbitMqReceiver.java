@@ -8,7 +8,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 @RabbitListener(queues = "new.order.queue")
 public class RabbitMqReceiver {
+
     private static final Logger logger = LoggerFactory.getLogger(RabbitMqReceiver.class);
+
     private final AmqpTemplate rabbitTemplate;
 
     public RabbitMqReceiver(AmqpTemplate rabbitTemplate) {
